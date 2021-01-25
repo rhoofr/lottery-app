@@ -1,0 +1,26 @@
+.highlightWinner,
+.highlightMatched,
+.highlightNumbersMatched {
+  font-weight: 700;
+  color: #66bb6a;
+}
+
+.bigWinner {
+  font-weight: 700;
+  color: orangered;
+  background-color: black;
+}
+
+.highlightNotMatched {
+  color: red;
+}
+
+.header--title_message,
+.header--title_message h3 {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.p-inline-message {
+  margin-top: 1rem;
+}

@@ -2,8 +2,11 @@
 
 # dependencies
 /node_modules
+/backup
+/public/data
 /.pnp
 .pnp.js
+.eslintcache
 
 # testing
 /coverage
@@ -17,6 +20,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 
 npm-debug.log*
 yarn-debug.log*
