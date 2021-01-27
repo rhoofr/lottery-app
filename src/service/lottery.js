@@ -1,6 +1,11 @@
 import Axios from 'axios';
 
 export class Lottery {
+  async getNumbersPlayed(numbersPlayedId) {
+    const response = await Axios.get(`/numbersplayed/${numbersPlayedId}`);
+    return response;
+  }
+
   getCustomersSmall() {
     return Axios.get('data/customers-small.json').then(res => res.data.data);
   }

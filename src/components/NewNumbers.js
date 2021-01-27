@@ -289,7 +289,6 @@ function NewNumbers(props) {
 
   const submitHandler = e => {
     e.preventDefault();
-    // console.log('submitHandler', `state.sendCount: ${state.sendCount}`);
     dispatch({ type: 'gameRules', value: state.game.value });
     dispatch({
       type: 'firstRules',
@@ -352,7 +351,6 @@ function NewNumbers(props) {
             }
           );
           dispatch({ type: 'createNumbersCompleted' });
-          // console.log(response.data);
           if (response.data.success) {
             props.history.push(`/numbersplayed`);
           } else {
@@ -363,8 +361,6 @@ function NewNumbers(props) {
               life: 3000
             });
           }
-          // console.log(`Post updated.  response: ${response.data}`);
-          // dispatch({ type: 'fetchComplete', value: response.data });
         } catch (error) {
           dispatch({ type: 'createNumbersCompleted' });
           console.log(

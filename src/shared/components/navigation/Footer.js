@@ -33,7 +33,7 @@ function Footer() {
       <p className='m-0'>
         Copyright &copy; {getYear()}{' '}
         <a href='/' className='text-muted'>
-          HoofSoft Development Services
+          HoofSoft Development
         </a>
         . All rights reserved.
       </p>

@@ -1,0 +1,11 @@
+.highlightWinner,
+.highlightBallMatched,
+.highlightNumbersMatched {
+  font-weight: 700;
+  color: #1fa326;
+}
+
+.highlightNotMatched {
+  font-weight: 700;
+  color: red;
+}

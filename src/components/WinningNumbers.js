@@ -33,7 +33,6 @@ function WinningNumbers() {
         const response = await Axios.get(`/winningnumbers`, {
           cancelToken: axiosRequest.token
         });
-        // console.log(`response: ${response}`);
         if (response.data.results.length > 0) {
           setState(draft => {
             draft.winningNumbers = response.data.results;
@@ -123,8 +122,8 @@ function WinningNumbers() {
             paginator
             paginatorTemplate='CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
             currentPageReportTemplate='Showing {first} to {last} of {totalRecords}'
-            rows={13}
-            rowsPerPageOptions={[13, 20, 50]}
+            rows={14}
+            rowsPerPageOptions={[14, 20, 50]}
             paginatorLeft={paginatorLeft}
             paginatorRight={paginatorRight}
             className='p-datatable-sm'

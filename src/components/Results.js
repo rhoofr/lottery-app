@@ -12,6 +12,8 @@ import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Message } from 'primereact/message';
+import { Dialog } from 'primereact/dialog';
+import ReactTooltip from 'react-tooltip';
 
 import Page from '../shared/containers/Page';
 import StateContext from '../shared/context/StateContext';
@@ -25,7 +27,11 @@ import './results.css';
 const Results = () => {
   const [state, setState] = useImmer({
     loading: true,
-    refreshCount: 0
+    refreshCount: 0,
+    numbersPlayedId: '',
+    numbersPlayedString: '',
+    viewNumbersPlayed: false,
+    numbersPlayed: {}
   });
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
@@ -87,6 +93,73 @@ const Results = () => {
     };
   }, [state.refreshCount, setState, appDispatch]);
 
+  useEffect(() => {
+    if (state.numbersPlayedId.length > 0) {
+      const axiosRequest = Axios.CancelToken.source();
+
+      async function fetchNumbersPlayed() {
+        try {
+          const response = await Axios.get(
+            `/numbersplayed/${state.numbersPlayedId}`,
+            {
+              cancelToken: axiosRequest.token
+            }
+          );
+
+          if (response.data.playedNumbers) {
+            setState(draft => {
+              draft.loading = false;
+              draft.numbersPlayed = response.data.playedNumbers;
+              draft.numbersPlayedId = '';
+              draft.viewNumbersPlayed = true;
+            });
+          } else {
+            setState(draft => {
+              draft.loading = false;
+            });
+            return toast.current.show({
+              severity: 'warn',
+              summary: 'Numbers Played',
+              detail: `No Numbers Played retrieved`,
+              life: 3000
+            });
+          }
+        } catch (error) {
+          console.log(
+            'There was a problem or the request was cancelled.',
+            error
+          );
+          setState(draft => {
+            draft.loading = false;
+          });
+          return toast.current.show({
+            severity: 'error',
+            summary: 'Numbers Played',
+            detail: `Error getting Numbers Played: ${error}`,
+            life: 3000
+          });
+        }
+      }
+      fetchNumbersPlayed();
+      // Cleanup
+      return () => {
+        axiosRequest.cancel();
+      };
+    }
+  }, [state.numbersPlayedId, setState]);
+
+  const handleGetNumbersPlayed = rowData => {
+    setState(draft => {
+      draft.numbersPlayedId = rowData.numbersPlayedId;
+    });
+  };
+
+  const hideDialog = () => {
+    setState(draft => {
+      draft.viewNumbersPlayed = false;
+    });
+  };
+
   const paginatorLeft = (
     <Button
       type='button'
@@ -107,14 +180,6 @@ const Results = () => {
       style={{ display: 'none' }}
     />
   );
-
-  // const formatCurrency = value => {
-  //   if (isNaN(value)) return;
-  //   return value.toLocaleString('en-US', {
-  //     style: 'currency',
-  //     currency: 'USD'
-  //   });
-  // };
 
   const gameBodyTemplate = rowData => {
     return rowData.game === 'P' ? 'PowerBall' : 'Mega Millions';
@@ -156,6 +221,32 @@ const Results = () => {
       </div>
     );
   };
+
+  const actionBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <Button
+          icon='pi pi-info'
+          className='p-button-rounded p-button-success checkNumbers'
+          onClick={() => handleGetNumbersPlayed(rowData)}
+          data-tip='Get Numbers Played'
+          data-for='check'
+        />
+        <ReactTooltip place='top' id='check' className='custom-tooltip' />
+      </React.Fragment>
+    );
+  };
+
+  const dialogFooter = (
+    <React.Fragment>
+      <Button
+        label='Close'
+        icon='pi pi-times'
+        className='p-button-text'
+        onClick={hideDialog}
+      />
+    </React.Fragment>
+  );
 
   return (
     <React.Fragment>
@@ -208,8 +299,57 @@ const Results = () => {
               header='Current Winnings'
               body={winningsBodyTemplate}
             ></Column>
+            <Column
+              className='checkNumbers'
+              header='Numbers Played'
+              body={actionBodyTemplate}
+            ></Column>
           </DataTable>
         </Page>
+      )}
+      {state.viewNumbersPlayed && (
+        <Dialog
+          visible={state.viewNumbersPlayed}
+          style={{ width: '80%' }}
+          header='Numbers Played Ticket'
+          modal
+          className='p-fluid'
+          footer={dialogFooter}
+          onHide={hideDialog}
+        >
+          <table className='table table-bordered border-primary jackpot--table'>
+            <thead>
+              <tr key='1'>
+                <th scope='col'>Game</th>
+                <th scope='col'>First</th>
+                <th scope='col'>Second</th>
+                <th scope='col'>Third</th>
+                <th scope='col'>Fourth</th>
+                <th scope='col'>Fifth</th>
+                <th scope='col'>Ball</th>
+                <th scope='col'>Start Date</th>
+                <th scope='col'>End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr key={state.numbersPlayed['_id']}>
+                <td>
+                  {state.numbersPlayed['game'] === 'P'
+                    ? 'Powerball'
+                    : 'Mega Millions'}
+                </td>
+                <td>{state.numbersPlayed['first']}</td>
+                <td>{state.numbersPlayed['second']}</td>
+                <td>{state.numbersPlayed['third']}</td>
+                <td>{state.numbersPlayed['fourth']}</td>
+                <td>{state.numbersPlayed['fifth']}</td>
+                <td>{state.numbersPlayed['ball']}</td>
+                <td>{formatDate(state.numbersPlayed['startDate'])}</td>
+                <td>{formatDate(state.numbersPlayed['endDate'])}</td>
+              </tr>
+            </tbody>
+          </table>
+        </Dialog>
       )}
     </React.Fragment>
   );

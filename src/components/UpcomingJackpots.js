@@ -23,7 +23,7 @@ function UpcomingJackpots() {
 
     async function fetchUpcomingJackpots() {
       try {
-        // Cleare out the results array
+        // Clear out the results array
         setState(draft => {
           draft.upcomingJackpots = [];
         });
@@ -31,18 +31,11 @@ function UpcomingJackpots() {
         const response = await Axios.get(`/checkupcoming`, {
           cancelToken: axiosRequest.token
         });
-        // console.log(response);
         if (response.data.pbResult && response.data.megaResult) {
           setState(draft => {
             draft.upcomingJackpots.push(response.data.pbResult);
             draft.upcomingJackpots.push(response.data.megaResult);
             draft.loading = false;
-          });
-          return toast.current.show({
-            severity: 'success',
-            summary: 'Upcoming Jackpots',
-            detail: `Upcoming Jackpots retrieved`,
-            life: 3000
           });
         } else {
           setState(draft => {

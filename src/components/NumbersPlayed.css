@@ -1,3 +1,21 @@
 .numbersPlayed {
   margin-top: 4rem;
 }
+
+.checkNumbers {
+  text-align: center !important;
+}
+
+.p-button-rounded.checkNumbers {
+  height: 2rem !important;
+  width: 2rem;
+}
+
+.allResultsChecked {
+  background-color: #aaf0d1 !important;
+}
+
+.numbersPlayed--title__highlight {
+  color: #aaf0d1;
+  font-weight: 700;
+}
