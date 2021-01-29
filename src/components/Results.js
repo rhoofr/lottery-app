@@ -18,6 +18,7 @@ import ReactTooltip from 'react-tooltip';
 import Page from '../shared/containers/Page';
 import StateContext from '../shared/context/StateContext';
 import DispatchContext from '../shared/context/DispatchContext';
+import PayoutSchedule from './PayoutSchedule';
 import LoadingSpinner from '../shared/components/uielements/LoadingSpinner';
 import { formatDate } from '../shared/utils/date';
 import { formatCurrency } from '../shared/utils/formatting';
@@ -31,7 +32,8 @@ const Results = () => {
     numbersPlayedId: '',
     numbersPlayedString: '',
     viewNumbersPlayed: false,
-    numbersPlayed: {}
+    numbersPlayed: {},
+    showPayout: false
   });
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
@@ -160,6 +162,12 @@ const Results = () => {
     });
   };
 
+  const hidePayoutDialog = () => {
+    setState(draft => {
+      draft.showPayout = false;
+    });
+  };
+
   const paginatorLeft = (
     <Button
       type='button'
@@ -173,12 +181,21 @@ const Results = () => {
     />
   );
   const paginatorRight = (
-    <Button
-      type='button'
-      icon='pi pi-cloud'
-      className='p-button-text'
-      style={{ display: 'none' }}
-    />
+    <div>
+      <Button
+        type='button'
+        icon='pi pi-dollar'
+        className='p-button-text'
+        onClick={() => {
+          setState(draft => {
+            draft.showPayout = true;
+          });
+        }}
+        data-tip='Payout Schedule'
+        data-for='payout'
+      />
+      <ReactTooltip place='left' id='payout' className='custom-tooltip' />
+    </div>
   );
 
   const gameBodyTemplate = rowData => {
@@ -248,6 +265,17 @@ const Results = () => {
     </React.Fragment>
   );
 
+  const dialogPayoutFooter = (
+    <React.Fragment>
+      <Button
+        label='Close'
+        icon='pi pi-times'
+        className='p-button-text'
+        onClick={hidePayoutDialog}
+      />
+    </React.Fragment>
+  );
+
   return (
     <React.Fragment>
       {state.loading && (
@@ -272,8 +300,8 @@ const Results = () => {
             paginator
             paginatorTemplate='CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
             currentPageReportTemplate='Showing {first} to {last} of {totalRecords}'
-            rows={13}
-            rowsPerPageOptions={[13, 20, 50]}
+            rows={12}
+            rowsPerPageOptions={[12, 20, 50]}
             paginatorLeft={paginatorLeft}
             paginatorRight={paginatorRight}
             className='p-datatable-sm'
@@ -311,13 +339,13 @@ const Results = () => {
         <Dialog
           visible={state.viewNumbersPlayed}
           style={{ width: '80%' }}
-          header='Numbers Played Ticket'
+          header='Numbers Played'
           modal
           className='p-fluid'
           footer={dialogFooter}
           onHide={hideDialog}
         >
-          <table className='table table-bordered border-primary jackpot--table'>
+          <table className='table table-bordered border-primary'>
             <thead>
               <tr key='1'>
                 <th scope='col'>Game</th>
@@ -351,6 +379,16 @@ const Results = () => {
           </table>
         </Dialog>
       )}
+      <Dialog
+        visible={state.showPayout}
+        style={{ width: '80%' }}
+        modal
+        className='p-fluid'
+        footer={dialogPayoutFooter}
+        onHide={hidePayoutDialog}
+      >
+        <PayoutSchedule />
+      </Dialog>
     </React.Fragment>
   );
 };

@@ -122,8 +122,8 @@ function WinningNumbers() {
             paginator
             paginatorTemplate='CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
             currentPageReportTemplate='Showing {first} to {last} of {totalRecords}'
-            rows={14}
-            rowsPerPageOptions={[14, 20, 50]}
+            rows={13}
+            rowsPerPageOptions={[13, 20, 50]}
             paginatorLeft={paginatorLeft}
             paginatorRight={paginatorRight}
             className='p-datatable-sm'

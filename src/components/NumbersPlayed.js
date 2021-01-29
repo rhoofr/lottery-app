@@ -27,7 +27,8 @@ function NumbersPlayed() {
     refreshCount: 0,
     viewDrawsForTicket: false,
     numbersPlayedRow: {},
-    drawResults: []
+    drawResults: [],
+    drawsRemaining: 0
   });
   const toast = useRef(null);
 
@@ -99,11 +100,13 @@ function NumbersPlayed() {
             setState(draft => {
               draft.loading = false;
               draft.drawResults = response.data.results;
+              draft.drawsRemaining = response.data.remaining;
               draft.viewDrawsForTicket = true;
             });
           } else {
             setState(draft => {
               draft.loading = false;
+              draft.numbersPlayedRow = {};
             });
             return toast.current.show({
               severity: 'warn',
@@ -119,6 +122,7 @@ function NumbersPlayed() {
           );
           setState(draft => {
             draft.loading = false;
+            draft.numbersPlayedRow = {};
           });
           return toast.current.show({
             severity: 'error',
@@ -227,7 +231,7 @@ function NumbersPlayed() {
           <h3 className='card__title'>
             NUMBERS PLAYED
             <span className='numbersPlayed--title__highlight'>
-              {' '}
+              {'  '}
               (Open tickets highlighted in Mint)
             </span>
           </h3>
@@ -236,8 +240,8 @@ function NumbersPlayed() {
             paginator
             paginatorTemplate='CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
             currentPageReportTemplate='Showing {first} to {last} of {totalRecords}'
-            rows={13}
-            rowsPerPageOptions={[13, 20, 50]}
+            rows={12}
+            rowsPerPageOptions={[12, 20, 50]}
             paginatorLeft={paginatorLeft}
             paginatorRight={paginatorRight}
             className={'p-datatable-sm'}
@@ -278,11 +282,11 @@ function NumbersPlayed() {
           footer={dialogFooter}
           onHide={hideDialog}
         >
-          <table className='table table-bordered border-primary jackpot--table'>
+          <table className='table table-bordered border-primary'>
             <thead>
               <tr key={uuidv4()}>
                 <th scope='col' colSpan={9}>
-                  Numbers Played
+                  Numbers Played (Drawings Remaining: {state.drawsRemaining})
                 </th>
               </tr>
               <tr key={uuidv4()}>

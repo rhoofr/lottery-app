@@ -1,0 +1,50 @@
+.card__title-payout {
+  margin-bottom: 2rem;
+  margin-top: 0;
+}
+
+.table-header__2 {
+  text-align: left;
+}
+
+.table-header__2 th {
+  padding-left: 2rem;
+}
+
+.payout {
+  padding: 0.5rem 0.5rem 0.5rem 2rem !important;
+  text-align: left;
+}
+
+.jackpot--table {
+  margin-bottom: 1.5rem;
+}
+/* .p-dialog-header-payout {
+  padding-bottom: 0 !important;
+} */
+
+.payout-notes {
+  display: inline-block;
+  width: 50%;
+}
+
+.payout-notes__details {
+  font-size: 1rem;
+}
+
+.reg-number {
+  display: inline-block;
+  border: 2px solid black;
+  border-radius: 50%;
+  height: 1.3rem;
+  width: 1.3rem;
+  margin-right: 0.7rem;
+}
+
+.ball-number {
+  display: inline-block;
+  border-radius: 50%;
+  height: 1.3rem;
+  width: 1.3rem;
+  background-color: red;
+}

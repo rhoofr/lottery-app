@@ -8,17 +8,22 @@ import StateContext from './shared/context/StateContext';
 import DispatchContext from './shared/context/DispatchContext';
 import LoadingSpinner from './shared/components/uielements/LoadingSpinner';
 import Results from './components/Results';
-import NumbersPlayed from './components/NumbersPlayed';
-import WinningNumbers from './components/WinningNumbers';
-import NewNumbers from './components/NewNumbers';
-import CheckResults from './components/CheckResults';
-import UpcomingJackpots from './components/UpcomingJackpots';
 import Footer from './shared/components/navigation/Footer';
 import NotFound from './components/NotFound';
+
+const NumbersPlayed = React.lazy(() => import('./components/NumbersPlayed'));
+const WinningNumbers = React.lazy(() => import('./components/WinningNumbers'));
+const NewNumbers = React.lazy(() => import('./components/NewNumbers'));
+const CheckResults = React.lazy(() => import('./components/CheckResults'));
+const UpcomingJackpots = React.lazy(() =>
+  import('./components/UpcomingJackpots')
+);
 
 Axios.defaults.baseURL =
   process.env.REACT_APP_BASE_BACKENDURL ||
   'http://localhost:5000/api/v1/lottery';
+
+Axios.defaults.headers = { 'Content-type': 'application/json' };
 
 function Main() {
   const initialState = {
