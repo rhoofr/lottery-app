@@ -3,6 +3,7 @@ import { useImmerReducer } from 'use-immer';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Axios from 'axios';
 
+import resultsReducer from './shared/reducers/results';
 import MainNavigation from './shared/components/navigation/MainNavigation';
 import StateContext from './shared/context/StateContext';
 import DispatchContext from './shared/context/DispatchContext';
@@ -31,18 +32,7 @@ function Main() {
     newTicketRequired: false
   };
 
-  function ourReducer(draft, action) {
-    switch (action.type) {
-      case 'resultsLoaded':
-        draft.results = action.data;
-        draft.newTicketRequired = action.newTicketRequired;
-        return;
-      default:
-        return;
-    }
-  }
-
-  const [state, dispatch] = useImmerReducer(ourReducer, initialState);
+  const [state, dispatch] = useImmerReducer(resultsReducer, initialState);
 
   return (
     <StateContext.Provider value={state}>
@@ -63,11 +53,11 @@ function Main() {
               <Route path='/newnumbers'>
                 <NewNumbers />
               </Route>
-              <Route path='/checkresults'>
-                <CheckResults />
-              </Route>
               <Route path='/upcoming'>
                 <UpcomingJackpots />
+              </Route>
+              <Route path='/checkresults'>
+                <CheckResults />
               </Route>
               <Route>
                 <NotFound />

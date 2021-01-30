@@ -11,8 +11,14 @@ import { Toast } from 'primereact/toast';
 import Page from '../shared/containers/Page';
 import LoadingSpinner from '../shared/components/uielements/LoadingSpinner';
 import newNumbersReducer, { initialState } from '../shared/reducers/newNumbers';
+import './NewNumbers.css';
 
-function NewNumbers(props) {
+function EditNumbers({
+  isEditing,
+  hideEditTicket,
+  numbersPlayedRow,
+  cardTitle
+}) {
   const toast = useRef(null);
 
   const [state, dispatch] = useImmerReducer(newNumbersReducer, initialState);
@@ -56,6 +62,16 @@ function NewNumbers(props) {
   };
 
   useEffect(() => {
+    if (isEditing) {
+      dispatch({
+        type: 'loadValues',
+        value: numbersPlayedRow
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (state.sendCount) {
       dispatch({ type: 'createNumbersStarted' });
 
@@ -63,8 +79,8 @@ function NewNumbers(props) {
 
       async function updatePost() {
         try {
-          const response = await Axios.post(
-            `/numbersplayed`,
+          const response = await Axios.patch(
+            `/numbersplayed/${numbersPlayedRow._id}`,
             {
               game: state.game.value,
               first: state.first.value,
@@ -80,27 +96,26 @@ function NewNumbers(props) {
               cancelToken: axiosRequest.token
             }
           );
-          dispatch({ type: 'createNumbersCompleted' });
           if (response.data.success) {
-            props.history.push(`/numbersplayed`);
+            // props.history.push(`/numbersplayed`);
+            return hideEditTicket();
           } else {
             return toast.current.show({
               severity: 'warn',
-              summary: 'New Numbers Error',
-              detail: `Error saving new numbers`,
+              summary: 'Edit Numbers Error',
+              detail: `Error saving edited ticket`,
               life: 3000
             });
           }
         } catch (error) {
-          dispatch({ type: 'createNumbersCompleted' });
           console.log(
             'Error saving new numbers: ',
             error.response.data.message
           );
           return toast.current.show({
             severity: 'error',
-            summary: 'New Numbers Error',
-            detail: `Error saving new numbers: ${error.response.data.message}`,
+            summary: 'Edit Numbers Error',
+            detail: `Error saving edited ticket: ${error.response.data.message}`,
             life: 3000
           });
         }
@@ -122,10 +137,15 @@ function NewNumbers(props) {
         </div>
       )}
       {!state.isSaving && (
-        <Page title='Create New Numbers'>
+        <Page title='Create New Numbers' isEditing={isEditing ? true : false}>
           <Toast ref={toast} />
-          <div className='card'>
-            <h3 className='card__title'>ADD NEW NUMBERS</h3>
+          <div className='card' id={isEditing ? 'edit__numbers' : ''}>
+            <h3
+              className='card__title'
+              id={isEditing ? 'edit__card--title' : ''}
+            >
+              {cardTitle || 'ADD NEW TICKET'}
+            </h3>
             {state.hasNumbersError ? (
               <Message
                 severity='error'
@@ -138,7 +158,7 @@ function NewNumbers(props) {
                 text='Date(s) are invalid for lottery type'
               ></Message>
             ) : null}
-            <form className='mt-2' onSubmit={submitHandler}>
+            <form className='mt-2'>
               <div className='form-group'>
                 <h5>Choose Game</h5>
                 <div className='p-formgroup-inline'>
@@ -409,12 +429,16 @@ function NewNumbers(props) {
                 )}
               </div>
 
-              <button
-                className='btn btn-lg btn-primary'
-                disabled={state.isSaving}
-              >
-                {state.isSaving ? 'Saving...' : 'Save Numbers'}
-              </button>
+              {isEditing && (
+                <button
+                  className='btn btn-lg btn-primary'
+                  disabled={state.isSaving}
+                  id='form-save'
+                  onClick={submitHandler}
+                >
+                  {state.isSaving ? 'Saving...' : 'Save Ticket'}
+                </button>
+              )}
             </form>
           </div>
         </Page>
@@ -423,4 +447,4 @@ function NewNumbers(props) {
   );
 }
 
-export default withRouter(NewNumbers);
+export default withRouter(EditNumbers);

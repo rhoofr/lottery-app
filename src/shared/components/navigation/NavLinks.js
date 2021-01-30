@@ -19,7 +19,7 @@ const NavLinks = props => {
         <NavLink to={'/winningnumbers'}>WINNING NUMBERS</NavLink>
       </li>
       <li>
-        <NavLink to={'/newnumbers'}>NEW NUMBERS</NavLink>
+        <NavLink to={'/newnumbers'}>NEW TICKET</NavLink>
       </li>
       <li>
         <NavLink to={'/upcoming'}>UPCOMING JACKPOTS</NavLink>

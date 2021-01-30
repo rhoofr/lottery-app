@@ -19,7 +19,7 @@ function Footer() {
         </Link>{' '}
         |{' '}
         <Link className='mx-1' to='/newnumbers'>
-          New Numbers
+          New Ticket
         </Link>{' '}
         |{' '}
         <Link className='mx-1' to='/upcoming'>

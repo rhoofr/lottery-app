@@ -4,6 +4,7 @@
 
 .checkNumbers {
   text-align: center !important;
+  margin: 0 0.2rem;
 }
 
 .p-button-rounded.checkNumbers {
@@ -18,4 +19,8 @@
 .numbersPlayed--title__highlight {
   color: #aaf0d1;
   font-weight: 700;
+}
+
+.dialog-delete__content {
+  margin-bottom: 1rem;
 }

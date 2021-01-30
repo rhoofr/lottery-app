@@ -7,7 +7,15 @@ function Page(props) {
     window.scrollTo(0, 0);
   }, [props.title]);
 
-  return <Container wide={props.wide}>{props.children}</Container>;
+  return (
+    <Container
+      wide={props.wide}
+      isEditing={props.isEditing}
+      isDeleting={props.isDeleting}
+    >
+      {props.children}
+    </Container>
+  );
 }
 
 export default Page;

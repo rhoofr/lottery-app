@@ -25,44 +25,24 @@ const highlightWinner = drawResult => {
   );
 };
 
-const highlightNumberMatched = (drawResult, numbersPlayed, nbr) => {
+const highlightNumberMatched = (drawResult, nbr) => {
   const matchedClassName = classNames({
     highlightNumbersMatched: drawResult.matchedNums.includes(nbr)
   });
   return <td className={matchedClassName}>{nbr}</td>;
 };
 
-function DrawingResult({ drawResult, numbersPlayed }) {
+function DrawingResult({ drawResult }) {
   // console.log(props);
   return (
     <React.Fragment>
       <tr key={uuidv4()}>
         <td>{drawResult.game === 'P' ? 'Powerball' : 'Mega Millions'}</td>
-        {highlightNumberMatched(
-          drawResult,
-          numbersPlayed,
-          drawResult.winningNums[0]
-        )}
-        {highlightNumberMatched(
-          drawResult,
-          numbersPlayed,
-          drawResult.winningNums[1]
-        )}
-        {highlightNumberMatched(
-          drawResult,
-          numbersPlayed,
-          drawResult.winningNums[2]
-        )}
-        {highlightNumberMatched(
-          drawResult,
-          numbersPlayed,
-          drawResult.winningNums[3]
-        )}
-        {highlightNumberMatched(
-          drawResult,
-          numbersPlayed,
-          drawResult.winningNums[4]
-        )}
+        {highlightNumberMatched(drawResult, drawResult.winningNums[0])}
+        {highlightNumberMatched(drawResult, drawResult.winningNums[1])}
+        {highlightNumberMatched(drawResult, drawResult.winningNums[2])}
+        {highlightNumberMatched(drawResult, drawResult.winningNums[3])}
+        {highlightNumberMatched(drawResult, drawResult.winningNums[4])}
         {ballMatchedBodyTemplate(drawResult)}
         <td>{formatDate(drawResult.drawDate)}</td>
         {highlightWinner(drawResult)}

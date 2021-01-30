@@ -16,6 +16,7 @@ import ReactTooltip from 'react-tooltip';
 import { formatDate } from '../shared/utils/date';
 import LoadingSpinner from '../shared/components/uielements/LoadingSpinner';
 import Page from '../shared/containers/Page';
+import EditNumbers from './EditNumbers';
 import DrawResult from './DrawingResult';
 
 import './NumbersPlayed.css';
@@ -27,8 +28,12 @@ function NumbersPlayed() {
     refreshCount: 0,
     viewDrawsForTicket: false,
     numbersPlayedRow: {},
+    getDraws: false,
+    editTicket: false,
+    deleteTicket: false,
     drawResults: [],
-    drawsRemaining: 0
+    drawsRemaining: 0,
+    displayConfirmation: false
   });
   const toast = useRef(null);
 
@@ -83,8 +88,9 @@ function NumbersPlayed() {
     };
   }, [state.refreshCount, setState]);
 
+  // To Get Draws for Ticket
   useEffect(() => {
-    if (Object.keys(state.numbersPlayedRow).length > 0) {
+    if (Object.keys(state.numbersPlayedRow).length > 0 && state.getDraws) {
       const axiosRequest = Axios.CancelToken.source();
 
       async function fetchDraws() {
@@ -102,11 +108,13 @@ function NumbersPlayed() {
               draft.drawResults = response.data.results;
               draft.drawsRemaining = response.data.remaining;
               draft.viewDrawsForTicket = true;
+              draft.getDraws = false;
             });
           } else {
             setState(draft => {
               draft.loading = false;
               draft.numbersPlayedRow = {};
+              draft.getDraws = false;
             });
             return toast.current.show({
               severity: 'warn',
@@ -123,6 +131,7 @@ function NumbersPlayed() {
           setState(draft => {
             draft.loading = false;
             draft.numbersPlayedRow = {};
+            draft.getDraws = false;
           });
           return toast.current.show({
             severity: 'error',
@@ -138,17 +147,76 @@ function NumbersPlayed() {
         axiosRequest.cancel();
       };
     }
-  }, [state.numbersPlayedRow, setState]);
+  }, [state.numbersPlayedRow, setState, state.getDraws]);
 
   const handleGetDrawsForTicket = rowData => {
     setState(draft => {
       draft.numbersPlayedRow = rowData;
+      draft.getDraws = true;
     });
   };
 
-  const hideDialog = () => {
+  const handleEditTicket = rowData => {
+    setState(draft => {
+      draft.numbersPlayedRow = rowData;
+      draft.editTicket = true;
+    });
+  };
+
+  const handleDeleteTicket = rowData => {
+    setState(draft => {
+      draft.numbersPlayedRow = rowData;
+      draft.deleteTicket = true;
+    });
+  };
+
+  const handleDeleteConfirmed = async () => {
+    // console.log('I am about to delete');
+    setState(draft => {
+      draft.loading = true;
+    });
+    // Delete the actual record...
+    try {
+      const response = await Axios.delete(
+        `/numbersplayed/${state.numbersPlayedRow._id}`
+      );
+
+      if (!response.data.success) {
+        console.log(
+          `Delete not successful.  Message: ${response.data.message}`
+        );
+      }
+    } catch (error) {
+      console.log('Error deleting: ', error.response.data.message);
+    }
+
+    setState(draft => {
+      draft.numbersPlayedRow = {};
+      draft.deleteTicket = false;
+      draft.refreshCount++;
+    });
+  };
+
+  const hideDrawsForTicketDialog = () => {
     setState(draft => {
       draft.viewDrawsForTicket = false;
+      draft.numbersPlayedRow = {};
+      draft.getDraws = false;
+    });
+  };
+
+  const hideEditTicket = () => {
+    setState(draft => {
+      draft.editTicket = false;
+      draft.numbersPlayedRow = {};
+      // Update refreshCount to trigger a refresh
+      draft.refreshCount++;
+    });
+  };
+
+  const hideDeleteDialog = () => {
+    setState(draft => {
+      draft.deleteTicket = false;
       draft.numbersPlayedRow = {};
     });
   };
@@ -203,20 +271,66 @@ function NumbersPlayed() {
           data-for='draws'
         />
         <ReactTooltip place='top' id='draws' className='custom-tooltip' />
+        <Button
+          icon='pi pi-pencil'
+          className='p-button-rounded p-button-success checkNumbers'
+          onClick={() => handleEditTicket(rowData)}
+          data-tip='Edit ticket'
+          data-for='edit'
+        />
+        <ReactTooltip place='top' id='edit' className='custom-tooltip' />
+        <Button
+          icon='pi pi-trash'
+          className='p-button-rounded p-button-success checkNumbers'
+          onClick={() => handleDeleteTicket(rowData)}
+          data-tip='Delete ticket'
+          data-for='delete'
+        />
+        <ReactTooltip place='top' id='delete' className='custom-tooltip' />
       </React.Fragment>
     );
   };
 
-  const dialogFooter = (
+  const drawsForTicketDialogFooter = (
     <React.Fragment>
       <Button
         label='Close'
         icon='pi pi-times'
         className='p-button-text'
-        onClick={hideDialog}
+        onClick={hideDrawsForTicketDialog}
       />
     </React.Fragment>
   );
+
+  const editTicketDialogFooter = (
+    <React.Fragment>
+      <Button
+        label='Close'
+        icon='pi pi-times'
+        className='p-button-text'
+        onClick={hideEditTicket}
+      />
+    </React.Fragment>
+  );
+
+  const renderFooter = name => {
+    return (
+      <div>
+        <Button
+          label='No'
+          icon='pi pi-times'
+          onClick={hideDeleteDialog}
+          className='p-button-text'
+          autoFocus
+        />
+        <Button
+          label='Yes'
+          icon='pi pi-check'
+          onClick={handleDeleteConfirmed}
+        />
+      </div>
+    );
+  };
 
   return (
     <React.Fragment>
@@ -279,8 +393,8 @@ function NumbersPlayed() {
           header='Results For Ticket'
           modal
           className='p-fluid'
-          footer={dialogFooter}
-          onHide={hideDialog}
+          footer={drawsForTicketDialogFooter}
+          onHide={hideDrawsForTicketDialog}
         >
           <table className='table table-bordered border-primary'>
             <thead>
@@ -342,18 +456,48 @@ function NumbersPlayed() {
             </thead>
             <tbody>
               {state.drawResults.map(result => {
-                return (
-                  <DrawResult
-                    key={uuidv4()}
-                    drawResult={result}
-                    numbersPlayed={state.numbersPlayedRow}
-                  />
-                );
+                return <DrawResult key={uuidv4()} drawResult={result} />;
               })}
             </tbody>
           </table>
         </Dialog>
       )}
+
+      <Dialog
+        visible={state.editTicket}
+        style={{ width: '80%' }}
+        modal
+        className='p-fluid'
+        footer={editTicketDialogFooter}
+        onHide={hideEditTicket}
+      >
+        <EditNumbers
+          cardTitle='EDIT TICKET'
+          numbersPlayedRow={state.numbersPlayedRow}
+          isEditing={state.editTicket}
+          hideEditTicket={hideEditTicket}
+        />
+      </Dialog>
+
+      <Dialog
+        header='Confirmation'
+        visible={state.deleteTicket}
+        modal
+        style={{ width: '450px' }}
+        footer={renderFooter('displayConfirmation')}
+        onHide={hideDeleteDialog}
+      >
+        <div className='confirmation-content dialog-delete__content'>
+          <i
+            className='pi pi-exclamation-triangle p-mr-3'
+            style={{ fontSize: '2rem', verticalAlign: 'middle' }}
+          />
+          <span>
+            Are you sure you want to delete the ticket? All related results will
+            also be deleted.
+          </span>
+        </div>
+      </Dialog>
     </React.Fragment>
   );
 }
