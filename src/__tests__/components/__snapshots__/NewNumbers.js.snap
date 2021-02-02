@@ -1,0 +1,400 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should set first value on input change 1`] = `
+<Fragment>
+  <Page
+    title="Create New Numbers"
+  >
+    <Toast
+      baseZIndex={0}
+      className={null}
+      id={null}
+      onClick={null}
+      onRemove={null}
+      position="top-right"
+      style={null}
+    />
+    <div
+      className="card"
+    >
+      <h3
+        className="card__title"
+      >
+        ADD NEW NUMBERS
+      </h3>
+      <form
+        className="mt-2"
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group"
+        >
+          <h5>
+            Choose Game
+          </h5>
+          <div
+            className="p-formgroup-inline"
+          >
+            <div
+              className="p-field-checkbox"
+            >
+              <RadioButton
+                ariaLabelledBy={null}
+                checked={false}
+                className={null}
+                disabled={false}
+                id={null}
+                inputId="game1"
+                name="game"
+                onChange={[Function]}
+                required={false}
+                style={null}
+                tabIndex={null}
+                tooltip={null}
+                tooltipOptions={null}
+                value="M"
+              />
+              <label
+                htmlFor="game1"
+              >
+                Mega Millions
+              </label>
+            </div>
+            <div
+              className="p-field-checkbox"
+            >
+              <RadioButton
+                ariaLabelledBy={null}
+                checked={false}
+                className={null}
+                disabled={false}
+                id={null}
+                inputId="game2"
+                name="game"
+                onChange={[Function]}
+                required={false}
+                style={null}
+                tabIndex={null}
+                tooltip={null}
+                tooltipOptions={null}
+                value="P"
+              />
+              <label
+                htmlFor="game2"
+              >
+                Powerball
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          className="p-fluid p-formgrid p-grid"
+        >
+          <div
+            className="p-field p-col"
+          >
+            <label
+              className="text-muted mb-1"
+              htmlFor="post-first"
+            >
+              First number
+            </label>
+            <input
+              autoComplete="off"
+              className="form-control form-control-lg form-control-first"
+              id="post-first"
+              name="first"
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder=""
+              type="number"
+              value=""
+            />
+          </div>
+          <div
+            className="p-field p-col"
+          >
+            <label
+              className="text-muted mb-1"
+              htmlFor="post-second"
+            >
+              Second number
+            </label>
+            <input
+              autoComplete="off"
+              className="form-control form-control-lg form-control-second"
+              id="post-second"
+              name="second"
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder=""
+              type="number"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="p-fluid p-formgrid p-grid"
+        >
+          <div
+            className="p-field p-col"
+          >
+            <label
+              className="text-muted mb-1"
+              htmlFor="post-third"
+            >
+              Third number
+            </label>
+            <input
+              autoComplete="off"
+              className="form-control form-control-lg form-control-third"
+              id="post-third"
+              name="third"
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder=""
+              type="number"
+              value=""
+            />
+          </div>
+          <div
+            className="p-field p-col"
+          >
+            <label
+              className="text-muted mb-1"
+              htmlFor="post-fourth"
+            >
+              Fourth number
+            </label>
+            <input
+              autoComplete="off"
+              className="form-control form-control-lg form-control-fourth"
+              id="post-fourth"
+              name="fourth"
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder=""
+              type="number"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="p-fluid p-formgrid p-grid"
+        >
+          <div
+            className="p-field p-col"
+          >
+            <label
+              className="text-muted mb-1"
+              htmlFor="post-fifth"
+            >
+              Fifth number
+            </label>
+            <input
+              autoComplete="off"
+              className="form-control form-control-lg form-control-fifth"
+              id="post-fifth"
+              name="fifth"
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder=""
+              type="number"
+              value=""
+            />
+          </div>
+          <div
+            className="p-field p-col"
+          >
+            <label
+              className="text-muted mb-1"
+              htmlFor="post-ball"
+            >
+              Ball number
+            </label>
+            <input
+              autoComplete="off"
+              className="form-control form-control-lg form-control-ball"
+              id="post-ball"
+              name="ball"
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder=""
+              type="number"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="p-fluid p-formgrid p-grid"
+        >
+          <div
+            className="p-field p-col"
+          >
+            <label
+              htmlFor="startDate"
+            >
+              Start Date
+            </label>
+            <Calendar
+              appendTo={null}
+              ariaLabelledBy={null}
+              autoZIndex={true}
+              baseZIndex={0}
+              className={null}
+              clearButtonClassName="p-button-secondary"
+              dateFormat={null}
+              dateTemplate={null}
+              disabled={false}
+              disabledDates={null}
+              disabledDays={null}
+              footerTemplate={null}
+              headerTemplate={null}
+              hideOnDateTimeSelect={false}
+              hourFormat="24"
+              icon="pi pi-calendar"
+              id="startDate"
+              inline={false}
+              inputClassName={null}
+              inputId={null}
+              inputStyle={null}
+              keepInvalid={false}
+              locale={null}
+              maxDate={null}
+              maxDateCount={null}
+              minDate={null}
+              monthNavigator={false}
+              name={null}
+              numberOfMonths={1}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onClearButtonClick={null}
+              onFocus={null}
+              onInput={null}
+              onSelect={null}
+              onTodayButtonClick={null}
+              onViewDateChange={null}
+              panelClassName={null}
+              panelStyle={null}
+              placeholder={null}
+              readOnlyInput={false}
+              required={false}
+              selectOtherMonths={false}
+              selectionMode="single"
+              shortYearCutoff="+10"
+              showButtonBar={false}
+              showIcon={true}
+              showMillisec={false}
+              showOnFocus={true}
+              showOtherMonths={true}
+              showSeconds={false}
+              showTime={false}
+              showWeek={false}
+              stepHour={1}
+              stepMillisec={1}
+              stepMinute={1}
+              stepSecond={1}
+              style={null}
+              tabIndex={null}
+              timeOnly={false}
+              todayButtonClassName="p-button-secondary"
+              tooltip={null}
+              tooltipOptions={null}
+              touchUI={false}
+              value=""
+              view="date"
+              viewDate={null}
+              yearNavigator={false}
+            />
+          </div>
+          <div
+            className="p-field p-col"
+          >
+            <label
+              htmlFor="endDate"
+            >
+              End Date
+            </label>
+            <Calendar
+              appendTo={null}
+              ariaLabelledBy={null}
+              autoZIndex={true}
+              baseZIndex={0}
+              className={null}
+              clearButtonClassName="p-button-secondary"
+              dateFormat={null}
+              dateTemplate={null}
+              disabled={false}
+              disabledDates={null}
+              disabledDays={null}
+              footerTemplate={null}
+              headerTemplate={null}
+              hideOnDateTimeSelect={false}
+              hourFormat="24"
+              icon="pi pi-calendar"
+              id="endDate"
+              inline={false}
+              inputClassName={null}
+              inputId={null}
+              inputStyle={null}
+              keepInvalid={false}
+              locale={null}
+              maxDate={null}
+              maxDateCount={null}
+              minDate={null}
+              monthNavigator={false}
+              name={null}
+              numberOfMonths={1}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onClearButtonClick={null}
+              onFocus={null}
+              onInput={null}
+              onSelect={null}
+              onTodayButtonClick={null}
+              onViewDateChange={null}
+              panelClassName={null}
+              panelStyle={null}
+              placeholder={null}
+              readOnlyInput={false}
+              required={false}
+              selectOtherMonths={false}
+              selectionMode="single"
+              shortYearCutoff="+10"
+              showButtonBar={false}
+              showIcon={true}
+              showMillisec={false}
+              showOnFocus={true}
+              showOtherMonths={true}
+              showSeconds={false}
+              showTime={false}
+              showWeek={false}
+              stepHour={1}
+              stepMillisec={1}
+              stepMinute={1}
+              stepSecond={1}
+              style={null}
+              tabIndex={null}
+              timeOnly={false}
+              todayButtonClassName="p-button-secondary"
+              tooltip={null}
+              tooltipOptions={null}
+              touchUI={false}
+              value=""
+              view="date"
+              viewDate={null}
+              yearNavigator={false}
+            />
+          </div>
+        </div>
+        <button
+          className="btn btn-lg btn-primary"
+          disabled={false}
+        >
+          Save Numbers
+        </button>
+      </form>
+    </div>
+  </Page>
+</Fragment>
+`;

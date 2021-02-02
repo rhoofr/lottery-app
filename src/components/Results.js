@@ -50,7 +50,7 @@ const Results = () => {
 
         if (response.data) {
           appDispatch({
-            type: 'resultsLoaded',
+            type: 'RESULTS_LOADED',
             data: response.data.results,
             newTicketRequired: response.data.newTicketRequired
           });

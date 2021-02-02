@@ -50,19 +50,31 @@ function UpcomingJackpots() {
           });
         }
       } catch (error) {
-        console.log(
-          `There was a problem or the request was cancelled. error: ${error}`
-        );
         setState(draft => {
           draft.upcomingJackpots = [];
           draft.loading = false;
         });
-        return toast.current.show({
-          severity: 'error',
-          summary: 'Upcoming Jackpots',
-          detail: `Error getting upcoming jackpots: ${error}`,
-          life: 3000
-        });
+        if (error.response) {
+          console.log(
+            `There was a problem or the request was cancelled. ${error.response.data.message}`
+          );
+          return toast.current.show({
+            severity: 'error',
+            summary: 'Upcoming Jackpots',
+            detail: `Error getting upcoming jackpots: ${error.response.data.message}`,
+            life: 3000
+          });
+        } else {
+          console.log(
+            `There was a problem or the request was cancelled. ${error}`
+          );
+          return toast.current.show({
+            severity: 'error',
+            summary: 'Upcoming Jackpots',
+            detail: `Error getting upcoming jackpots: ${error}`,
+            life: 3000
+          });
+        }
       }
     }
     fetchUpcomingJackpots();

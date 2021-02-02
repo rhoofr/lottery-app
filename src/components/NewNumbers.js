@@ -12,52 +12,52 @@ import Page from '../shared/containers/Page';
 import LoadingSpinner from '../shared/components/uielements/LoadingSpinner';
 import newNumbersReducer, { initialState } from '../shared/reducers/newNumbers';
 
-function NewNumbers(props) {
+export function NewNumbers(props) {
   const toast = useRef(null);
 
   const [state, dispatch] = useImmerReducer(newNumbersReducer, initialState);
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch({ type: 'gameRules', value: state.game.value });
+    dispatch({ type: 'GAME_RULES', value: state.game.value });
     dispatch({
-      type: 'firstRules',
+      type: 'FIRST_RULES',
       value: state.first.value,
       game: state.game.value
     });
     dispatch({
-      type: 'secondRules',
+      type: 'SECOND_RULES',
       value: state.second.value,
       game: state.game.value
     });
     dispatch({
-      type: 'thirdRules',
+      type: 'THIRD_RULES',
       value: state.third.value,
       game: state.game.value
     });
     dispatch({
-      type: 'fourthRules',
+      type: 'FOURTH_RULES',
       value: state.fourth.value,
       game: state.game.value
     });
     dispatch({
-      type: 'fifthRules',
+      type: 'FIFTH_RULES',
       value: state.fifth.value,
       game: state.game.value
     });
     dispatch({
-      type: 'ballRules',
+      type: 'BALL_RULES',
       value: state.ball.value,
       game: state.game.value
     });
-    dispatch({ type: 'startDateRules', value: state.startDate.value });
-    dispatch({ type: 'endDateRules', value: state.endDate.value });
-    dispatch({ type: 'submitRequest' });
+    dispatch({ type: 'STARTDATE_RULES', value: state.startDate.value });
+    dispatch({ type: 'ENDDATE_RULES', value: state.endDate.value });
+    dispatch({ type: 'SUBMIT_REQUEST' });
   };
 
   useEffect(() => {
     if (state.sendCount) {
-      dispatch({ type: 'createNumbersStarted' });
+      dispatch({ type: 'CREATE_NUMBERS_STARTED' });
 
       const axiosRequest = Axios.CancelToken.source();
 
@@ -80,7 +80,7 @@ function NewNumbers(props) {
               cancelToken: axiosRequest.token
             }
           );
-          dispatch({ type: 'createNumbersCompleted' });
+          dispatch({ type: 'CREATE_NUMBERS_COMPLETED' });
           if (response.data.success) {
             props.history.push(`/numbersplayed`);
           } else {
@@ -92,17 +92,27 @@ function NewNumbers(props) {
             });
           }
         } catch (error) {
-          dispatch({ type: 'createNumbersCompleted' });
-          console.log(
-            'Error saving new numbers: ',
-            error.response.data.message
-          );
-          return toast.current.show({
-            severity: 'error',
-            summary: 'New Numbers Error',
-            detail: `Error saving new numbers: ${error.response.data.message}`,
-            life: 3000
-          });
+          dispatch({ type: 'CREATE_NUMBERS_COMPLETED' });
+          if (error.response) {
+            console.log(
+              'Error saving new numbers: ',
+              error.response.data.message
+            );
+            return toast.current.show({
+              severity: 'error',
+              summary: 'New Numbers Error',
+              detail: `Error saving new numbers: ${error.response.data.message}`,
+              life: 3000
+            });
+          } else {
+            console.log('Error saving new numbers', error);
+            return toast.current.show({
+              severity: 'error',
+              summary: 'New Numbers Error',
+              detail: `Error saving new numbers ${error}`,
+              life: 3000
+            });
+          }
         }
       }
       updatePost();
@@ -148,7 +158,7 @@ function NewNumbers(props) {
                       name='game'
                       value='M'
                       onChange={e =>
-                        dispatch({ type: 'gameChange', value: e.target.value })
+                        dispatch({ type: 'GAME_CHANGE', value: e.target.value })
                       }
                       checked={state.game.value === 'M'}
                     />
@@ -160,7 +170,7 @@ function NewNumbers(props) {
                       name='game'
                       value='P'
                       onChange={e =>
-                        dispatch({ type: 'gameChange', value: e.target.value })
+                        dispatch({ type: 'GAME_CHANGE', value: e.target.value })
                       }
                       checked={state.game.value === 'P'}
                     />
@@ -181,11 +191,11 @@ function NewNumbers(props) {
                   </label>
                   <input
                     onChange={e =>
-                      dispatch({ type: 'firstChange', value: e.target.value })
+                      dispatch({ type: 'FIRST_CHANGE', value: e.target.value })
                     }
                     onBlur={e =>
                       dispatch({
-                        type: 'firstRules',
+                        type: 'FIRST_RULES',
                         value: e.target.value,
                         game: state.game.value
                       })
@@ -210,11 +220,11 @@ function NewNumbers(props) {
                   </label>
                   <input
                     onChange={e =>
-                      dispatch({ type: 'secondChange', value: e.target.value })
+                      dispatch({ type: 'SECOND_CHANGE', value: e.target.value })
                     }
                     onBlur={e =>
                       dispatch({
-                        type: 'secondRules',
+                        type: 'SECOND_RULES',
                         value: e.target.value,
                         game: state.game.value
                       })
@@ -242,11 +252,11 @@ function NewNumbers(props) {
                   </label>
                   <input
                     onChange={e =>
-                      dispatch({ type: 'thirdChange', value: e.target.value })
+                      dispatch({ type: 'THIRD_CHANGE', value: e.target.value })
                     }
                     onBlur={e =>
                       dispatch({
-                        type: 'thirdRules',
+                        type: 'THIRD_RULES',
                         value: e.target.value,
                         game: state.game.value
                       })
@@ -271,11 +281,11 @@ function NewNumbers(props) {
                   </label>
                   <input
                     onChange={e =>
-                      dispatch({ type: 'fourthChange', value: e.target.value })
+                      dispatch({ type: 'FOURTH_CHANGE', value: e.target.value })
                     }
                     onBlur={e =>
                       dispatch({
-                        type: 'fourthRules',
+                        type: 'FOURTH_RULES',
                         value: e.target.value,
                         game: state.game.value
                       })
@@ -303,11 +313,14 @@ function NewNumbers(props) {
                   </label>
                   <input
                     onChange={e =>
-                      dispatch({ type: 'fifthChange', value: e.target.value })
+                      dispatch({
+                        type: 'FIFTH_CHANGE',
+                        value: e.target.value
+                      })
                     }
                     onBlur={e =>
                       dispatch({
-                        type: 'fifthRules',
+                        type: 'FIFTH_RULES',
                         value: e.target.value,
                         game: state.game.value
                       })
@@ -332,11 +345,11 @@ function NewNumbers(props) {
                   </label>
                   <input
                     onChange={e =>
-                      dispatch({ type: 'ballChange', value: e.target.value })
+                      dispatch({ type: 'BALL_CHANGE', value: e.target.value })
                     }
                     onBlur={e =>
                       dispatch({
-                        type: 'ballRules',
+                        type: 'BALL_RULES',
                         value: e.target.value,
                         game: state.game.value
                       })
@@ -365,13 +378,13 @@ function NewNumbers(props) {
                     value={state.startDate.value}
                     onChange={e =>
                       dispatch({
-                        type: 'startDateChange',
+                        type: 'STARTDATE_CHANGE',
                         value: e.target.value
                       })
                     }
                     onBlur={e =>
                       dispatch({
-                        type: 'startDateRules',
+                        type: 'STARTDATE_RULES',
                         value: e.target.value,
                         startDate: state.startDate.value
                       })
@@ -390,11 +403,14 @@ function NewNumbers(props) {
                     id='endDate'
                     value={state.endDate.value}
                     onChange={e =>
-                      dispatch({ type: 'endDateChange', value: e.target.value })
+                      dispatch({
+                        type: 'ENDDATE_CHANGE',
+                        value: e.target.value
+                      })
                     }
                     onBlur={e =>
                       dispatch({
-                        type: 'endDateRules',
+                        type: 'ENDDATE_RULES',
                         value: e.target.value,
                         endDate: state.endDate.value
                       })

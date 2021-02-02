@@ -18,7 +18,7 @@ const CheckResults = props => {
         });
 
         if (response.data) {
-          appDispatch({ type: 'resultsLoaded', data: response.data.results });
+          appDispatch({ type: 'RESULTS_LOADED', data: response.data.results });
         }
       } catch (error) {
         console.log('There was a problem or the request was cancelled.', error);

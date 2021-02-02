@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`--- NumbersPlayed snapshot --- should render NumbersPlayed Page correctly 1`] = `
+<Fragment>
+  <div
+    className="center"
+  >
+    <LoadingSpinner
+      asOverlay={true}
+    />
+  </div>
+  <Dialog
+    appendTo={null}
+    ariaCloseIconLabel="Close"
+    baseZIndex={0}
+    blockScroll={false}
+    className="p-fluid"
+    closable={true}
+    closeOnEscape={true}
+    contentClassName={null}
+    contentStyle={null}
+    dismissableMask={false}
+    focusOnShow={true}
+    footer={
+      <React.Fragment>
+        <Button
+          badge={null}
+          badgeClassName={null}
+          className="p-button-text"
+          icon="pi pi-times"
+          iconPos="left"
+          label="Close"
+          onClick={[Function]}
+          tooltip={null}
+          tooltipOptions={null}
+        />
+      </React.Fragment>
+    }
+    header={null}
+    icons={null}
+    id={null}
+    maskClassName={null}
+    maximizable={false}
+    maximized={false}
+    modal={true}
+    onHide={[Function]}
+    onMaximize={null}
+    onShow={null}
+    position="center"
+    rtl={false}
+    showHeader={true}
+    style={
+      Object {
+        "width": "80%",
+      }
+    }
+    visible={false}
+  >
+    <withRouter(EditNumbers)
+      cardTitle="EDIT TICKET"
+      hideEditTicket={[Function]}
+      isEditing={false}
+      numbersPlayedRow={Object {}}
+    />
+  </Dialog>
+  <Dialog
+    appendTo={null}
+    ariaCloseIconLabel="Close"
+    baseZIndex={0}
+    blockScroll={false}
+    className={null}
+    closable={true}
+    closeOnEscape={true}
+    contentClassName={null}
+    contentStyle={null}
+    dismissableMask={false}
+    focusOnShow={true}
+    footer={
+      <div>
+        <Button
+          autoFocus={true}
+          badge={null}
+          badgeClassName={null}
+          className="p-button-text"
+          icon="pi pi-times"
+          iconPos="left"
+          label="No"
+          onClick={[Function]}
+          tooltip={null}
+          tooltipOptions={null}
+        />
+        <Button
+          badge={null}
+          badgeClassName={null}
+          icon="pi pi-check"
+          iconPos="left"
+          label="Yes"
+          onClick={[Function]}
+          tooltip={null}
+          tooltipOptions={null}
+        />
+      </div>
+    }
+    header="Confirmation"
+    icons={null}
+    id={null}
+    maskClassName={null}
+    maximizable={false}
+    maximized={false}
+    modal={true}
+    onHide={[Function]}
+    onMaximize={null}
+    onShow={null}
+    position="center"
+    rtl={false}
+    showHeader={true}
+    style={
+      Object {
+        "width": "450px",
+      }
+    }
+    visible={false}
+  >
+    <div
+      className="confirmation-content dialog-delete__content"
+    >
+      <i
+        className="pi pi-exclamation-triangle p-mr-3"
+        style={
+          Object {
+            "fontSize": "2rem",
+            "verticalAlign": "middle",
+          }
+        }
+      />
+      <span>
+        Are you sure you want to delete the ticket? All related results will also be deleted.
+      </span>
+    </div>
+  </Dialog>
+</Fragment>
+`;

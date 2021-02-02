@@ -61,62 +61,67 @@ export const initialState = {
 
 const newNumbersReducer = (draft, action) => {
   switch (action.type) {
-    case 'gameChange':
+    case 'GAME_CHANGE':
       if (action.value === 'P' || action.value === 'M') {
         draft.game.hasErrors = false;
+        draft.game.value = action.value;
+      } else {
+        draft.game.hasErrors = true;
       }
-      draft.game.value = action.value;
-      return;
-    case 'firstChange':
+      return draft;
+    case 'FIRST_CHANGE':
       if (Number(action.value) > 0) {
         draft.first.hasErrors = false;
       }
       draft.first.value = action.value;
-      return;
-    case 'secondChange':
+      return draft;
+    case 'SECOND_CHANGE':
       if (Number(action.value) > 0) {
         draft.second.hasErrors = false;
       }
       draft.second.value = action.value;
-      return;
-    case 'thirdChange':
+      return draft;
+    case 'THIRD_CHANGE':
       if (Number(action.value) > 0) {
         draft.third.hasErrors = false;
       }
       draft.third.value = action.value;
-      return;
-    case 'fourthChange':
+      return draft;
+    case 'FOURTH_CHANGE':
       if (Number(action.value) > 0) {
         draft.fourth.hasErrors = false;
       }
       draft.fourth.value = action.value;
-      return;
-    case 'fifthChange':
+      return draft;
+    case 'FIFTH_CHANGE':
       if (Number(action.value) > 0) {
         draft.fifth.hasErrors = false;
       }
       draft.fifth.value = action.value;
-      return;
-    case 'ballChange':
+      return draft;
+    case 'BALL_CHANGE':
       if (Number(action.value) > 0) {
         draft.ball.hasErrors = false;
       }
       draft.ball.value = action.value;
-      return;
-    case 'startDateChange':
+      return draft;
+    case 'STARTDATE_CHANGE':
       if (isValidDate(action.value)) {
         draft.startDate.hasErrors = false;
+        draft.startDate.value = action.value;
+      } else {
+        draft.startDate.hasErrors = true;
       }
-      draft.startDate.value = action.value;
-      return;
-    case 'endDateChange':
+      return draft;
+    case 'ENDDATE_CHANGE':
       if (isValidDate(action.value)) {
         draft.endDate.hasErrors = false;
+        draft.endDate.value = action.value;
+      } else {
+        draft.startDate.hasErrors = true;
       }
-      draft.endDate.value = action.value;
-      return;
-    case 'submitRequest':
-      // console.log('entered submitRequest');
+      return draft;
+    case 'SUBMIT_REQUEST':
       const validDates = datesValidForGame(
         draft.game.value,
         draft.startDate.value,
@@ -158,15 +163,13 @@ const newNumbersReducer = (draft, action) => {
         draft.sendCount++;
       }
       return;
-    case 'createNumbersStarted':
-    case 'deleteNumberStarted':
+    case 'CREATE_NUMBERS_STARTED':
       draft.isSaving = true;
       return;
-    case 'createNumbersCompleted':
-    case 'deleteNumbersCompleted':
+    case 'CREATE_NUMBERS_COMPLETED':
       draft.isSaving = false;
       return;
-    case 'gameRules':
+    case 'GAME_RULES':
       if (
         !action.value.trim() ||
         (action.value !== 'P' && action.value !== 'M')
@@ -178,9 +181,9 @@ const newNumbersReducer = (draft, action) => {
         draft.game.message = '';
       }
       return;
-    case 'firstRules':
+    case 'FIRST_RULES':
       if (
-        !Number(action.value) > 0 ||
+        Number(action.value) <= 0 ||
         (action.game && !numberIsValid(action.game, action.value))
       ) {
         draft.first.hasErrors = true;
@@ -190,9 +193,9 @@ const newNumbersReducer = (draft, action) => {
         draft.first.message = '';
       }
       return;
-    case 'secondRules':
+    case 'SECOND_RULES':
       if (
-        !Number(action.value) > 0 ||
+        Number(action.value) <= 0 ||
         (action.game && !numberIsValid(action.game, action.value))
       ) {
         draft.second.hasErrors = true;
@@ -202,9 +205,9 @@ const newNumbersReducer = (draft, action) => {
         draft.second.message = '';
       }
       return;
-    case 'thirdRules':
+    case 'THIRD_RULES':
       if (
-        !Number(action.value) > 0 ||
+        Number(action.value) <= 0 ||
         (action.game && !numberIsValid(action.game, action.value))
       ) {
         draft.third.hasErrors = true;
@@ -214,9 +217,9 @@ const newNumbersReducer = (draft, action) => {
         draft.third.message = '';
       }
       return;
-    case 'fourthRules':
+    case 'FOURTH_RULES':
       if (
-        !Number(action.value) > 0 ||
+        Number(action.value) <= 0 ||
         (action.game && !numberIsValid(action.game, action.value))
       ) {
         draft.fourth.hasErrors = true;
@@ -226,9 +229,9 @@ const newNumbersReducer = (draft, action) => {
         draft.fourth.message = '';
       }
       return;
-    case 'fifthRules':
+    case 'FIFTH_RULES':
       if (
-        !Number(action.value) > 0 ||
+        Number(action.value) <= 0 ||
         (action.game && !numberIsValid(action.game, action.value))
       ) {
         draft.fifth.hasErrors = true;
@@ -238,9 +241,9 @@ const newNumbersReducer = (draft, action) => {
         draft.fifth.message = '';
       }
       return;
-    case 'ballRules':
+    case 'BALL_RULES':
       if (
-        !Number(action.value) > 0 ||
+        Number(action.value) <= 0 ||
         (action.game && !ballIsValid(action.game, action.value))
       ) {
         draft.ball.hasErrors = true;
@@ -250,7 +253,7 @@ const newNumbersReducer = (draft, action) => {
         draft.ball.message = '';
       }
       return;
-    case 'startDateRules':
+    case 'STARTDATE_RULES':
       if (!isValidDate(action.value)) {
         draft.startDate.hasErrors = true;
         draft.startDate.message = 'Provide a Start Date.';
@@ -259,7 +262,7 @@ const newNumbersReducer = (draft, action) => {
         draft.startDate.message = '';
       }
       return;
-    case 'endDateRules':
+    case 'ENDDATE_RULES':
       if (!isValidDate(action.value)) {
         draft.endDate.hasErrors = true;
         draft.endDate.message = 'Provide an End Date.';
@@ -268,7 +271,7 @@ const newNumbersReducer = (draft, action) => {
         draft.endDate.message = '';
       }
       return;
-    case 'loadValues':
+    case 'LOAD_VALUES':
       // console.log(action.value);
       draft.game.value = action.value.game;
       draft.first.value = action.value.first;
@@ -279,10 +282,7 @@ const newNumbersReducer = (draft, action) => {
       draft.ball.value = action.value.ball;
       draft.startDate.value = new Date(action.value.startDate);
       draft.endDate.value = new Date(action.value.endDate);
-      return;
-    case 'showDisplayConfirmation':
-      draft.displayConfirmation = action.value;
-      return;
+      return draft;
     default:
       return;
   }

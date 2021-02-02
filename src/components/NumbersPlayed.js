@@ -361,7 +361,12 @@ function NumbersPlayed() {
             className={'p-datatable-sm'}
             rowClassName={rowClass}
           >
-            <Column field='game' header='Game' body={gameBodyTemplate}></Column>
+            <Column
+              data-testid='game'
+              field='game'
+              header='Game'
+              body={gameBodyTemplate}
+            ></Column>
             <Column field='first' header='First'></Column>
             <Column field='second' header='Second'></Column>
             <Column field='third' header='Third'></Column>
