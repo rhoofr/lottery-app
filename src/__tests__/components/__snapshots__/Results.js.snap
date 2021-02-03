@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`--- Results snapshot --- should render Results correctly. 1`] = `
+<Fragment>
+  <div
+    className="center"
+  >
+    <LoadingSpinner
+      asOverlay={true}
+    />
+  </div>
+  <Dialog
+    appendTo={null}
+    ariaCloseIconLabel="Close"
+    baseZIndex={0}
+    blockScroll={false}
+    className="p-fluid"
+    closable={true}
+    closeOnEscape={true}
+    contentClassName={null}
+    contentStyle={null}
+    dismissableMask={false}
+    focusOnShow={true}
+    footer={
+      <React.Fragment>
+        <Button
+          badge={null}
+          badgeClassName={null}
+          className="p-button-text"
+          icon="pi pi-times"
+          iconPos="left"
+          label="Close"
+          onClick={[Function]}
+          tooltip={null}
+          tooltipOptions={null}
+        />
+      </React.Fragment>
+    }
+    header={null}
+    icons={null}
+    id={null}
+    maskClassName={null}
+    maximizable={false}
+    maximized={false}
+    modal={true}
+    onHide={[Function]}
+    onMaximize={null}
+    onShow={null}
+    position="center"
+    rtl={false}
+    showHeader={true}
+    style={
+      Object {
+        "width": "80%",
+      }
+    }
+    visible={false}
+  >
+    <PayoutSchedule />
+  </Dialog>
+</Fragment>
+`;

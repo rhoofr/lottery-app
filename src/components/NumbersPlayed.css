@@ -2,12 +2,18 @@
   margin-top: 4rem;
 }
 
-.checkNumbers {
+.actions {
   text-align: center !important;
   margin: 0 0.2rem;
+  width: 120px;
 }
 
-.p-button-rounded.checkNumbers {
+.p-button-rounded.action-button {
+  height: 1.9rem !important;
+  width: 1.9rem;
+}
+
+.p-button-rounded.actions {
   height: 2rem !important;
   width: 2rem;
 }
@@ -23,4 +29,19 @@
 
 .dialog-delete__content {
   margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 45em) {
+  .actions {
+    text-align: left !important;
+  }
+
+  .p-button-rounded.actions {
+    height: 1.7rem !important;
+    width: 1.7rem;
+  }
+
+  .edit-ticket {
+    width: 100% !important;
+  }
 }

@@ -99,11 +99,70 @@ function WinningNumbers() {
   );
 
   const gameBodyTemplate = rowData => {
-    return rowData.game === 'P' ? 'PowerBall' : 'Mega Millions';
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Game</span>
+        {rowData.game === 'P' ? 'PowerBall' : 'Mega Millions'}
+      </React.Fragment>
+    );
+  };
+
+  const firstBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>First</span>
+        {rowData.first}
+      </React.Fragment>
+    );
+  };
+  const secondBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Second</span>
+        {rowData.second}
+      </React.Fragment>
+    );
+  };
+  const thirdBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Third</span>
+        {rowData.third}
+      </React.Fragment>
+    );
+  };
+  const fourthBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Fourth</span>
+        {rowData.fourth}
+      </React.Fragment>
+    );
+  };
+  const fifthBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Fifth</span>
+        {rowData.fifth}
+      </React.Fragment>
+    );
+  };
+  const ballBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Ball</span>
+        {rowData.ball}
+      </React.Fragment>
+    );
   };
 
   const drawDateBodyTemplate = rowData => {
-    return formatDate(rowData.drawDate);
+    return (
+      <div>
+        <span className='p-column-title'>Draw Date</span>
+        {formatDate(rowData.drawDate)}
+      </div>
+    );
   };
 
   return (
@@ -117,30 +176,60 @@ function WinningNumbers() {
         <Page title='Winning Numbers' wide>
           <Toast ref={toast} />
           <h3 className='card__title'>WINNING NUMBERS</h3>
-          <DataTable
-            value={state.winningNumbers}
-            paginator
-            paginatorTemplate='CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
-            currentPageReportTemplate='Showing {first} to {last} of {totalRecords}'
-            rows={13}
-            rowsPerPageOptions={[13, 20, 50]}
-            paginatorLeft={paginatorLeft}
-            paginatorRight={paginatorRight}
-            className='p-datatable-sm'
-          >
-            <Column field='game' header='Game' body={gameBodyTemplate}></Column>
-            <Column field='first' header='First'></Column>
-            <Column field='second' header='Second'></Column>
-            <Column field='third' header='Third'></Column>
-            <Column field='fourth' header='Fourth'></Column>
-            <Column field='fifth' header='Fifth'></Column>
-            <Column field='ball' header='Ball'></Column>
-            <Column
-              field='drawDate'
-              header='Draw Date'
-              body={drawDateBodyTemplate}
-            ></Column>
-          </DataTable>
+          <div className='datatable-responsive'>
+            <DataTable
+              value={state.winningNumbers}
+              paginator
+              paginatorTemplate='CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
+              currentPageReportTemplate='Showing {first} to {last} of {totalRecords}'
+              rows={13}
+              rowsPerPageOptions={[13, 20, 50]}
+              paginatorLeft={paginatorLeft}
+              paginatorRight={paginatorRight}
+              className='p-datatable-sm p-datatable-responsive'
+            >
+              <Column
+                field='game'
+                header='Game'
+                body={gameBodyTemplate}
+              ></Column>
+              <Column
+                field='first'
+                header='First'
+                body={firstBodyTemplate}
+              ></Column>
+              <Column
+                field='second'
+                header='Second'
+                body={secondBodyTemplate}
+              ></Column>
+              <Column
+                field='third'
+                header='Third'
+                body={thirdBodyTemplate}
+              ></Column>
+              <Column
+                field='fourth'
+                header='Fourth'
+                body={fourthBodyTemplate}
+              ></Column>
+              <Column
+                field='fifth'
+                header='Fifth'
+                body={fifthBodyTemplate}
+              ></Column>
+              <Column
+                field='ball'
+                header='Ball'
+                body={ballBodyTemplate}
+              ></Column>
+              <Column
+                field='drawDate'
+                header='Draw Date'
+                body={drawDateBodyTemplate}
+              ></Column>
+            </DataTable>
+          </div>
         </Page>
       )}
     </React.Fragment>

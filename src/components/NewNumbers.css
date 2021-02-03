@@ -13,3 +13,25 @@
 #form-save {
   margin-top: 1rem;
 }
+
+@media screen and (max-width: 45em) {
+  #post-first,
+  #post-second,
+  #post-third,
+  #post-fourth,
+  #post-fifth,
+  #post-ball {
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+  }
+
+  #edit__numbers {
+    margin: 0 0.2rem;
+  }
+
+  #endDate {
+    /* Full-screen display */
+  }
+}

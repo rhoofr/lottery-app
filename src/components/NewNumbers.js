@@ -11,6 +11,7 @@ import { Toast } from 'primereact/toast';
 import Page from '../shared/containers/Page';
 import LoadingSpinner from '../shared/components/uielements/LoadingSpinner';
 import newNumbersReducer, { initialState } from '../shared/reducers/newNumbers';
+import './NewNumbers.css';
 
 export function NewNumbers(props) {
   const toast = useRef(null);
@@ -148,7 +149,7 @@ export function NewNumbers(props) {
                 text='Date(s) are invalid for lottery type'
               ></Message>
             ) : null}
-            <form className='mt-2' onSubmit={submitHandler}>
+            <form className='mt-sm-2' onSubmit={submitHandler}>
               <div className='form-group'>
                 <h5>Choose Game</h5>
                 <div className='p-formgroup-inline'>

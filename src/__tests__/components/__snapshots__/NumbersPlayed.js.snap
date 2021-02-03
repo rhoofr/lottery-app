@@ -14,7 +14,7 @@ exports[`--- NumbersPlayed snapshot --- should render NumbersPlayed Page correct
     ariaCloseIconLabel="Close"
     baseZIndex={0}
     blockScroll={false}
-    className="p-fluid"
+    className="p-fluid edit-ticket"
     closable={true}
     closeOnEscape={true}
     contentClassName={null}

@@ -23,7 +23,7 @@ exports[`should set first value on input change 1`] = `
         ADD NEW NUMBERS
       </h3>
       <form
-        className="mt-2"
+        className="mt-sm-2"
         onSubmit={[Function]}
       >
         <div

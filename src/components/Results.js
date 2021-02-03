@@ -169,16 +169,21 @@ const Results = () => {
   };
 
   const paginatorLeft = (
-    <Button
-      type='button'
-      icon='pi pi-refresh'
-      className='p-button-text'
-      onClick={() => {
-        setState(draft => {
-          draft.refreshCount++;
-        });
-      }}
-    />
+    <div>
+      <Button
+        type='button'
+        icon='pi pi-refresh'
+        className='p-button-text'
+        onClick={() => {
+          setState(draft => {
+            draft.refreshCount++;
+          });
+        }}
+        data-tip='Refresh Page'
+        data-for='refresh'
+      />
+      <ReactTooltip place='right' id='refresh' className='custom-tooltip' />
+    </div>
   );
   const paginatorRight = (
     <div>
@@ -199,7 +204,12 @@ const Results = () => {
   );
 
   const gameBodyTemplate = rowData => {
-    return rowData.game === 'P' ? 'PowerBall' : 'Mega Millions';
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Game</span>
+        {rowData.game === 'P' ? 'PowerBall' : 'Mega Millions'}
+      </React.Fragment>
+    );
   };
 
   const ballMatchedBodyTemplate = rowData => {
@@ -209,6 +219,7 @@ const Results = () => {
     });
     return (
       <div className={matchedClassName}>
+        <span className='p-column-title'>Ball Matched</span>
         {rowData.ballMatched ? 'True' : 'False'}
       </div>
     );
@@ -218,11 +229,21 @@ const Results = () => {
     const matchedClassName = classNames({
       highlightNumbersMatched: rowData.numbersMatched > 0
     });
-    return <div className={matchedClassName}>{rowData.numbersMatched}</div>;
+    return (
+      <div className={matchedClassName}>
+        <span className='p-column-title'>Numbers Matched</span>
+        {rowData.numbersMatched}
+      </div>
+    );
   };
 
   const drawingDateBodyTemplate = rowData => {
-    return formatDate(rowData.drawDate);
+    return (
+      <div>
+        <span className='p-column-title'>Draw Date</span>
+        {formatDate(rowData.drawDate)}
+      </div>
+    );
   };
 
   const winningsBodyTemplate = rowData => {
@@ -234,6 +255,7 @@ const Results = () => {
 
     return (
       <div className={winningsClassName}>
+        <span className='p-column-title'>Current Winnings</span>
         {formatCurrency(rowData.currentWinnings)}
       </div>
     );
@@ -242,6 +264,7 @@ const Results = () => {
   const actionBodyTemplate = rowData => {
     return (
       <React.Fragment>
+        <span className='p-column-title'>Numbers Played</span>
         <Button
           icon='pi pi-info'
           className='p-button-rounded p-button-success checkNumbers'
@@ -295,44 +318,50 @@ const Results = () => {
               ></Message>
             ) : null}
           </div>
-          <DataTable
-            value={appState.results}
-            paginator
-            paginatorTemplate='CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
-            currentPageReportTemplate='Showing {first} to {last} of {totalRecords}'
-            rows={12}
-            rowsPerPageOptions={[12, 20, 50]}
-            paginatorLeft={paginatorLeft}
-            paginatorRight={paginatorRight}
-            className='p-datatable-sm'
-          >
-            <Column field='game' header='Game' body={gameBodyTemplate}></Column>
-            <Column
-              field='drawDate'
-              header='Draw Date'
-              body={drawingDateBodyTemplate}
-            ></Column>
-            <Column
-              field='numbersMatched'
-              header='Numbers Matched'
-              body={numbersMatchedBodyTemplate}
-            ></Column>
-            <Column
-              field='ballMatched'
-              header='Ball Matched'
-              body={ballMatchedBodyTemplate}
-            ></Column>
-            <Column
-              field='currentWinnings'
-              header='Current Winnings'
-              body={winningsBodyTemplate}
-            ></Column>
-            <Column
-              className='checkNumbers'
-              header='Numbers Played'
-              body={actionBodyTemplate}
-            ></Column>
-          </DataTable>
+          <div className='datatable-responsive'>
+            <DataTable
+              value={appState.results}
+              paginator
+              paginatorTemplate='CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
+              currentPageReportTemplate='Showing {first} to {last} of {totalRecords}'
+              rows={12}
+              rowsPerPageOptions={[12, 20, 50]}
+              paginatorLeft={paginatorLeft}
+              paginatorRight={paginatorRight}
+              className='p-datatable-sm p-datatable-responsive'
+            >
+              <Column
+                field='game'
+                header='Game'
+                body={gameBodyTemplate}
+              ></Column>
+              <Column
+                field='drawDate'
+                header='Draw Date'
+                body={drawingDateBodyTemplate}
+              ></Column>
+              <Column
+                field='numbersMatched'
+                header='Numbers Matched'
+                body={numbersMatchedBodyTemplate}
+              ></Column>
+              <Column
+                field='ballMatched'
+                header='Ball Matched'
+                body={ballMatchedBodyTemplate}
+              ></Column>
+              <Column
+                field='currentWinnings'
+                header='Current Winnings'
+                body={winningsBodyTemplate}
+              ></Column>
+              <Column
+                className='checkNumbers'
+                header='Numbers Played'
+                body={actionBodyTemplate}
+              ></Column>
+            </DataTable>
+          </div>
         </Page>
       )}
       {state.viewNumbersPlayed && (
@@ -341,11 +370,11 @@ const Results = () => {
           style={{ width: '80%' }}
           header='Numbers Played'
           modal
-          className='p-fluid'
+          className='p-fluid view-numbers-played'
           footer={dialogFooter}
           onHide={hideDialog}
         >
-          <table className='table table-bordered border-primary'>
+          <table className='table table-bordered border-primary numbers-played'>
             <thead>
               <tr key='1'>
                 <th scope='col'>Game</th>

@@ -11,7 +11,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0.5em;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 }
 
 h1,
@@ -89,4 +89,74 @@ input[type='number']::-webkit-inner-spin-button {
 
 .p-dialog-content {
   padding: 0 1.5rem 0.5rem 1.5rem !important;
+}
+
+@media screen and (max-width: 70em) {
+  .card {
+    margin: 3.5rem 6rem 2rem;
+    border: none;
+    /* margin-bottom: 2rem;
+    margin-top: 3.5rem; */
+  }
+}
+
+@media screen and (max-width: 45em) {
+  html {
+    font-size: 12px !important;
+  }
+
+  .card {
+    margin: 1rem 1rem 2rem;
+  }
+
+  .card h3 {
+    margin: 1rem 0 0 0;
+  }
+
+  .datatable-responsive
+    .p-datatable.p-datatable-responsive
+    .p-datatable-thead
+    > tr
+    > th,
+  .datatable-responsive
+    .p-datatable.p-datatable-responsive
+    .p-datatable-tfoot
+    > tr
+    > td {
+    display: none !important;
+  }
+
+  .datatable-responsive
+    .p-datatable.p-datatable-responsive
+    .p-datatable-tbody
+    > tr
+    > td {
+    text-align: left;
+    display: block;
+    width: 100%;
+    float: left;
+    clear: left;
+    border: 0 none;
+  }
+
+  .datatable-responsive
+    .p-datatable.p-datatable-responsive
+    .p-datatable-tbody
+    > tr
+    > td
+    .p-column-title {
+    padding: 0.4rem;
+    min-width: 50%;
+    display: inline-block;
+    margin: -0.4em 1em -0.4em -0.4rem;
+    font-weight: bold;
+  }
+
+  .datatable-responsive
+    .p-datatable.p-datatable-responsive
+    .p-datatable-tbody
+    > tr
+    > td:last-child {
+    border-bottom: 1px solid var(--surface-d);
+  }
 }

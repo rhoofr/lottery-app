@@ -222,16 +222,21 @@ function NumbersPlayed() {
   };
 
   const paginatorLeft = (
-    <Button
-      type='button'
-      icon='pi pi-refresh'
-      className='p-button-text'
-      onClick={() => {
-        setState(draft => {
-          draft.refreshCount++;
-        });
-      }}
-    />
+    <div>
+      <Button
+        type='button'
+        icon='pi pi-refresh'
+        className='p-button-text'
+        onClick={() => {
+          setState(draft => {
+            draft.refreshCount++;
+          });
+        }}
+        data-tip='Refresh Page'
+        data-for='refresh'
+      />
+      <ReactTooltip place='right' id='refresh' className='custom-tooltip' />
+    </div>
   );
   const paginatorRight = (
     <Button
@@ -243,15 +248,79 @@ function NumbersPlayed() {
   );
 
   const gameBodyTemplate = rowData => {
-    return rowData.game === 'P' ? 'PowerBall' : 'Mega Millions';
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Game</span>
+        {rowData.game === 'P' ? 'PowerBall' : 'Mega Millions'}
+      </React.Fragment>
+    );
+  };
+
+  const firstBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>First</span>
+        {rowData.first}
+      </React.Fragment>
+    );
+  };
+  const secondBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Second</span>
+        {rowData.second}
+      </React.Fragment>
+    );
+  };
+  const thirdBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Third</span>
+        {rowData.third}
+      </React.Fragment>
+    );
+  };
+  const fourthBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Fourth</span>
+        {rowData.fourth}
+      </React.Fragment>
+    );
+  };
+  const fifthBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Fifth</span>
+        {rowData.fifth}
+      </React.Fragment>
+    );
+  };
+  const ballBodyTemplate = rowData => {
+    return (
+      <React.Fragment>
+        <span className='p-column-title'>Ball</span>
+        {rowData.ball}
+      </React.Fragment>
+    );
   };
 
   const startDateBodyTemplate = rowData => {
-    return formatDate(rowData.startDate);
+    return (
+      <div>
+        <span className='p-column-title'>Start Date</span>
+        {formatDate(rowData.startDate)}
+      </div>
+    );
   };
 
   const endDateBodyTemplate = rowData => {
-    return formatDate(rowData.endDate);
+    return (
+      <div>
+        <span className='p-column-title'>End Date</span>
+        {formatDate(rowData.endDate)}
+      </div>
+    );
   };
 
   const rowClass = data => {
@@ -263,9 +332,10 @@ function NumbersPlayed() {
   const actionBodyTemplate = rowData => {
     return (
       <React.Fragment>
+        <span className='p-column-title'>Actions</span>
         <Button
           icon='pi pi-check'
-          className='p-button-rounded p-button-success checkNumbers'
+          className='p-button-rounded p-button-success action-button'
           onClick={() => handleGetDrawsForTicket(rowData)}
           data-tip='Get Drawings for Ticket'
           data-for='draws'
@@ -273,7 +343,7 @@ function NumbersPlayed() {
         <ReactTooltip place='top' id='draws' className='custom-tooltip' />
         <Button
           icon='pi pi-pencil'
-          className='p-button-rounded p-button-success checkNumbers'
+          className='p-button-rounded p-button-success action-button'
           onClick={() => handleEditTicket(rowData)}
           data-tip='Edit ticket'
           data-for='edit'
@@ -281,7 +351,7 @@ function NumbersPlayed() {
         <ReactTooltip place='top' id='edit' className='custom-tooltip' />
         <Button
           icon='pi pi-trash'
-          className='p-button-rounded p-button-success checkNumbers'
+          className='p-button-rounded p-button-success action-button'
           onClick={() => handleDeleteTicket(rowData)}
           data-tip='Delete ticket'
           data-for='delete'
@@ -342,53 +412,81 @@ function NumbersPlayed() {
       {!state.loading && state.numbersPlayed && (
         <Page title='Numbers Played' wide>
           <Toast ref={toast} />
-          <h3 className='card__title'>
-            NUMBERS PLAYED
-            <span className='numbersPlayed--title__highlight'>
-              {'  '}
-              (Open tickets highlighted in Mint)
-            </span>
-          </h3>
-          <DataTable
-            value={state.numbersPlayed}
-            paginator
-            paginatorTemplate='CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
-            currentPageReportTemplate='Showing {first} to {last} of {totalRecords}'
-            rows={12}
-            rowsPerPageOptions={[12, 20, 50]}
-            paginatorLeft={paginatorLeft}
-            paginatorRight={paginatorRight}
-            className={'p-datatable-sm'}
-            rowClassName={rowClass}
-          >
-            <Column
-              data-testid='game'
-              field='game'
-              header='Game'
-              body={gameBodyTemplate}
-            ></Column>
-            <Column field='first' header='First'></Column>
-            <Column field='second' header='Second'></Column>
-            <Column field='third' header='Third'></Column>
-            <Column field='fourth' header='Fourth'></Column>
-            <Column field='fifth' header='Fifth'></Column>
-            <Column field='ball' header='Ball'></Column>
-            <Column
-              field='startDate'
-              header='Start Date'
-              body={startDateBodyTemplate}
-            ></Column>
-            <Column
-              field='endDate'
-              header='End Date'
-              body={endDateBodyTemplate}
-            ></Column>
-            <Column
-              className='checkNumbers'
-              header='Actions'
-              body={actionBodyTemplate}
-            ></Column>
-          </DataTable>
+          <div className='header--title_message'>
+            <h3 className='card__title'>
+              NUMBERS PLAYED
+              <span className='numbersPlayed--title__highlight'>
+                {'  '}
+                (Open tickets highlighted in Mint)
+              </span>
+            </h3>
+          </div>
+          <div className='datatable-responsive'>
+            <DataTable
+              value={state.numbersPlayed}
+              paginator
+              paginatorTemplate='CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
+              currentPageReportTemplate='Showing {first} to {last} of {totalRecords}'
+              rows={12}
+              rowsPerPageOptions={[12, 20, 50]}
+              paginatorLeft={paginatorLeft}
+              paginatorRight={paginatorRight}
+              className={'p-datatable-sm p-datatable-responsive'}
+              rowClassName={rowClass}
+            >
+              <Column
+                data-testid='game'
+                field='game'
+                header='Game'
+                body={gameBodyTemplate}
+              ></Column>
+              <Column
+                field='first'
+                header='First'
+                body={firstBodyTemplate}
+              ></Column>
+              <Column
+                field='second'
+                header='Second'
+                body={secondBodyTemplate}
+              ></Column>
+              <Column
+                field='third'
+                header='Third'
+                body={thirdBodyTemplate}
+              ></Column>
+              <Column
+                field='fourth'
+                header='Fourth'
+                body={fourthBodyTemplate}
+              ></Column>
+              <Column
+                field='fifth'
+                header='Fifth'
+                body={fifthBodyTemplate}
+              ></Column>
+              <Column
+                field='ball'
+                header='Ball'
+                body={ballBodyTemplate}
+              ></Column>
+              <Column
+                field='startDate'
+                header='Start Date'
+                body={startDateBodyTemplate}
+              ></Column>
+              <Column
+                field='endDate'
+                header='End Date'
+                body={endDateBodyTemplate}
+              ></Column>
+              <Column
+                className='actions'
+                header='Actions'
+                body={actionBodyTemplate}
+              ></Column>
+            </DataTable>
+          </div>
         </Page>
       )}
       {state.viewDrawsForTicket && (
@@ -472,7 +570,7 @@ function NumbersPlayed() {
         visible={state.editTicket}
         style={{ width: '80%' }}
         modal
-        className='p-fluid'
+        className='p-fluid edit-ticket'
         footer={editTicketDialogFooter}
         onHide={hideEditTicket}
       >
