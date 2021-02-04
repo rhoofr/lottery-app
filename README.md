@@ -1,4 +1,4 @@
-# HoofSoft Lottery App
+# Lottery App
 
 ![Project start page](/img/lottery-app-preview.jpg)
 
@@ -47,6 +47,6 @@ What information can a user obtain and store?
 
 ## License
 
-> You can check out the full license [here](https://github.com/rhoofr/lottery-app/LICENSE)
+> You can check out the full license [here](https://github.com/rhoofr/lottery-app/blob/main/LICENSE)
 
 This project is licensed under the terms of the **MIT** license.
